@@ -65,10 +65,10 @@ export function SiteHeader() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`rounded-full border px-4 py-2 text-[13px] font-bold uppercase tracking-[0.12em] transition duration-300 ${
+                  className={`rounded-full border px-4 py-2 text-[13px] font-bold uppercase tracking-[0.12em] transition duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--color-focus-ring)] ${
                     pathname === item.href
-                      ? "border-white/90 bg-white text-[var(--color-mocha-dark)] shadow-[0_14px_32px_rgba(225,69,140,0.18)]"
-                      : "border-transparent bg-white/44 text-[var(--color-ink)]/92 hover:-translate-y-0.5 hover:border-white/80 hover:bg-white/92 hover:text-[var(--color-mocha-dark)] hover:shadow-[0_16px_34px_rgba(225,69,140,0.18)]"
+                      ? "border-[rgba(125,23,71,0.18)] bg-[linear-gradient(180deg,#ffffff,#ffe3ef)] text-[var(--color-mocha-deep)] shadow-[0_14px_32px_rgba(225,69,140,0.2)]"
+                      : "border-[rgba(181,31,101,0.08)] bg-[rgba(255,255,255,0.72)] text-[var(--color-mocha-deep)] hover:-translate-y-0.5 hover:border-[rgba(181,31,101,0.18)] hover:bg-white hover:text-[var(--color-mocha-deep)] hover:shadow-[0_16px_34px_rgba(225,69,140,0.18)]"
                   }`}
                 >
                   {item.label}
@@ -84,7 +84,7 @@ export function SiteHeader() {
             <AccountMenu />
             <Link
               href="/cart"
-              className="inline-flex items-center gap-2 rounded-full border border-white/90 bg-white/96 px-4 py-2.5 text-sm font-semibold text-[var(--color-ink)] shadow-[0_14px_32px_rgba(225,69,140,0.16)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_38px_rgba(225,69,140,0.2)]"
+              className="inline-flex items-center gap-2 rounded-full border border-[rgba(181,31,101,0.14)] bg-white/96 px-4 py-2.5 text-sm font-semibold text-[var(--color-mocha-deep)] shadow-[0_14px_32px_rgba(225,69,140,0.16)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_38px_rgba(225,69,140,0.2)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--color-focus-ring)]"
             >
               Cart
               <span className="inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-[var(--color-mocha)] px-2 text-xs text-white">
@@ -101,10 +101,10 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className={`rounded-full px-4 py-2 transition duration-300 ${
+              className={`rounded-full border px-4 py-2 text-center transition duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--color-focus-ring)] ${
                 pathname === item.href
-                  ? "bg-[var(--color-blush-strong)] text-[var(--color-mocha-dark)] shadow-[0_12px_26px_rgba(225,69,140,0.16)]"
-                  : "bg-white/88 text-center hover:bg-white hover:text-[var(--color-mocha-dark)] hover:shadow-[0_14px_28px_rgba(225,69,140,0.16)]"
+                  ? "border-[rgba(125,23,71,0.16)] bg-[linear-gradient(180deg,#fff5fa,#ffd8e8)] text-[var(--color-mocha-deep)] shadow-[0_12px_26px_rgba(225,69,140,0.18)]"
+                  : "border-[rgba(181,31,101,0.08)] bg-white/92 text-[var(--color-mocha-deep)] hover:bg-white hover:text-[var(--color-mocha-deep)] hover:shadow-[0_14px_28px_rgba(225,69,140,0.16)]"
               }`}
             >
               {item.label}

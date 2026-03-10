@@ -32,9 +32,9 @@ export function AccountMenu() {
       <button
         type="button"
         onClick={() => signOut({ callbackUrl: "/" })}
-        className="hidden rounded-full border border-[var(--color-sand)] bg-white/75 px-4 py-2 text-sm font-bold text-[var(--color-ink)]/70 md:inline-flex"
+        className="btn-nav-logout group hidden items-center gap-2 px-4 py-2 text-sm font-bold md:inline-flex focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--color-focus-ring)]"
       >
-        Logout
+        <span className="inline-block transition-transform duration-200 group-hover:-translate-x-0.5">Logout</span>
       </button>
     </div>
   );

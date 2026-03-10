@@ -5,10 +5,12 @@
   --color-ink: #24111c;
   --color-mocha: #e1458c;
   --color-mocha-dark: #b51f65;
+  --color-mocha-deep: #7d1747;
   --color-rose: #ff79b0;
   --color-sand: #f8d2e4;
   --color-blush: #fff0f6;
   --color-blush-strong: #ffc7df;
+  --color-focus-ring: rgba(125, 23, 71, 0.28);
   --color-muted: #5c3b4d;
   --color-line: rgba(225, 69, 140, 0.24);
   --background: var(--color-cream);
@@ -52,6 +54,11 @@ a {
   text-decoration: none;
 }
 
+:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 3px;
+}
+
 button,
 input,
 textarea,
@@ -78,6 +85,20 @@ select {
   50% {
     opacity: 1;
     transform: scale(1.05);
+  }
+}
+
+@keyframes shimmer-slide {
+  0% {
+    transform: translateX(-140%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(220%);
+    opacity: 0;
   }
 }
 
@@ -141,4 +162,48 @@ select {
 
 .ring-soft {
   border: 1px solid var(--color-line);
+}
+
+.btn-nav-logout {
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+  border: 1px solid rgba(181, 31, 101, 0.18);
+  background: linear-gradient(135deg, rgba(255, 245, 250, 0.95), rgba(255, 216, 232, 0.92));
+  color: var(--color-mocha-deep);
+  box-shadow:
+    0 10px 24px rgba(225, 69, 140, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease;
+}
+
+.btn-nav-logout::after {
+  content: "";
+  position: absolute;
+  inset: -20% auto -20% -30%;
+  width: 42%;
+  transform: translateX(-140%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.62), transparent);
+  pointer-events: none;
+}
+
+.btn-nav-logout:hover {
+  transform: translateY(-2px) scale(1.01);
+  border-color: rgba(125, 23, 71, 0.26);
+  background: linear-gradient(135deg, rgba(255, 239, 246, 1), rgba(255, 203, 225, 0.96));
+  box-shadow:
+    0 18px 38px rgba(225, 69, 140, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+}
+
+.btn-nav-logout:hover::after {
+  animation: shimmer-slide 780ms ease;
+}
+
+.btn-nav-logout:active {
+  transform: translateY(0) scale(0.985);
 }
