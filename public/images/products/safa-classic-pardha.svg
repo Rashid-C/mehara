@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="80" x2="760" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF9FC"/>
+      <stop offset="0.52" stop-color="#FDE6F0"/>
+      <stop offset="1" stop-color="#F3BDD3"/>
+    </linearGradient>
+    <linearGradient id="fabric" x1="450" y1="248" x2="450" y2="1014" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2C1F27"/>
+      <stop offset="1" stop-color="#4A2F3E"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1200" rx="48" fill="url(#bg)"/>
+  <circle cx="732" cy="196" r="152" fill="#FFFFFF" fill-opacity=".45"/>
+  <circle cx="154" cy="1018" r="206" fill="#F8CFE0" fill-opacity=".8"/>
+  <path d="M451 249c-78 0-156 58-156 171v203c0 237 66 337 156 391 90-54 155-154 155-391V420c0-113-77-171-155-171Z" fill="url(#fabric)"/>
+  <path d="M384 324c26 20 46 31 67 31s42-11 67-31" stroke="#F9D8E5" stroke-linecap="round" stroke-width="18"/>
+  <path d="M358 465c44 46 91 71 93 71 1 0 49-25 93-71" stroke="#65424F" stroke-linecap="round" stroke-width="28"/>
+  <path d="M328 923c59 36 115 53 123 55 7-2 63-19 122-55" stroke="#65424F" stroke-linecap="round" stroke-width="24"/>
+  <text x="72" y="106" fill="#B83773" font-family="Georgia, serif" font-size="42">Safa Classic Pardha</text>
+  <text x="72" y="151" fill="#6A5561" font-family="Aptos, Segoe UI, sans-serif" font-size="24">Mehar Pardha local catalog image</text>
+</svg>

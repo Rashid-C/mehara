@@ -1,0 +1,152 @@
+{
+  "products": [
+    {
+      "id": "prod-noor-flow-abaya",
+      "name": "Noor Flow Abaya",
+      "slug": "noor-flow-abaya",
+      "category": "Abaya",
+      "price": 349,
+      "stock": 16,
+      "sizes": "S, M, L, XL",
+      "image": "https://images.unsplash.com/photo-1611042553365-9b101441c135?auto=format&fit=crop&w=1200&q=80",
+      "shortDescription": "Soft layered abaya with understated panel detailing.",
+      "description": "A lightweight abaya designed for graceful movement, clean finishing, and all-day comfort in formal or casual settings.",
+      "featured": true,
+      "createdAt": "2026-03-10T00:00:00.000Z",
+      "updatedAt": "2026-03-10T00:00:00.000Z"
+    },
+    {
+      "id": "prod-safa-classic-pardha",
+      "name": "Safa Classic Pardha",
+      "slug": "safa-classic-pardha",
+      "category": "Pardha",
+      "price": 229,
+      "stock": 24,
+      "sizes": "Free Size",
+      "image": "/images/products/safa-classic-pardha.svg",
+      "shortDescription": "Breathable pardha with refined drape and clean neckline.",
+      "description": "A practical everyday pardha crafted to balance ease, modest coverage, and polished minimal styling.",
+      "featured": true,
+      "createdAt": "2026-03-10T00:00:00.000Z",
+      "updatedAt": "2026-03-10T00:00:00.000Z"
+    },
+    {
+      "id": "prod-layali-occasion-dress",
+      "name": "Layali Occasion Dress",
+      "slug": "layali-occasion-dress",
+      "category": "Women Dress",
+      "price": 389,
+      "stock": 10,
+      "sizes": "S, M, L",
+      "image": "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=80",
+      "shortDescription": "A modest evening dress with sculpted sleeves and fluid fall.",
+      "description": "Built for festive occasions, this dress brings modest proportions together with elegant texture and rich tonal depth.",
+      "featured": true,
+      "createdAt": "2026-03-10T00:00:00.000Z",
+      "updatedAt": "2026-03-10T00:00:00.000Z"
+    },
+    {
+      "id": "prod-rimah-everyday-abaya",
+      "name": "Rimah Everyday Abaya",
+      "slug": "rimah-everyday-abaya",
+      "category": "Abaya",
+      "price": 299,
+      "stock": 18,
+      "sizes": "S, M, L, XL, XXL",
+      "image": "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1200&q=80",
+      "shortDescription": "An everyday abaya with practical tailoring and modern shape.",
+      "description": "A wardrobe staple with premium fabric feel, easy layering, and a versatile silhouette suited to regular wear.",
+      "featured": false,
+      "createdAt": "2026-03-10T00:00:00.000Z",
+      "updatedAt": "2026-03-10T00:00:00.000Z"
+    },
+    {
+      "id": "prod-hiba-premium-pardha",
+      "name": "Hiba Premium Pardha",
+      "slug": "hiba-premium-pardha",
+      "category": "Pardha",
+      "price": 259,
+      "stock": 15,
+      "sizes": "Free Size",
+      "image": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=80",
+      "shortDescription": "Minimal premium pardha with soft fabric weight and smooth finish.",
+      "description": "A boutique-style pardha with refined drape and consistent comfort for long wear throughout the day.",
+      "featured": false,
+      "createdAt": "2026-03-10T00:00:00.000Z",
+      "updatedAt": "2026-03-10T00:00:00.000Z"
+    },
+    {
+      "id": "prod-amani-grace-dress",
+      "name": "Amani Grace Dress",
+      "slug": "amani-grace-dress",
+      "category": "Women Dress",
+      "price": 419,
+      "stock": 8,
+      "sizes": "M, L, XL",
+      "image": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1200&q=80",
+      "shortDescription": "Statement modest dress with tailored waistline and flowing hem.",
+      "description": "An elevated modest dress built for eventwear, designed with clean structure and a graceful profile.",
+      "featured": true,
+      "createdAt": "2026-03-10T00:00:00.000Z",
+      "updatedAt": "2026-03-10T00:00:00.000Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": "980046d0-071f-4786-ab74-d381d6e07333",
+      "customerName": "ranu",
+      "customerPhone": "1234567890",
+      "shippingAddress": "dfzjk",
+      "notes": "dzbz",
+      "totalAmount": 698,
+      "status": "PENDING",
+      "createdAt": "2026-03-10T15:15:44.958Z",
+      "updatedAt": "2026-03-10T15:15:44.958Z",
+      "items": [
+        {
+          "id": "5485d71c-3219-47de-832c-f0a1c00a54a2",
+          "orderId": "980046d0-071f-4786-ab74-d381d6e07333",
+          "productId": "prod-noor-flow-abaya",
+          "productName": "Noor Flow Abaya",
+          "quantity": 2,
+          "unitPrice": 349,
+          "size": "S"
+        }
+      ]
+    },
+    {
+      "id": "order-aisha-rahman",
+      "customerName": "Aisha Rahman",
+      "customerPhone": "+971 50 123 4567",
+      "shippingAddress": "Al Nahda, Dubai, UAE",
+      "notes": "Call before delivery",
+      "totalAmount": 578,
+      "status": "CONFIRMED",
+      "paymentMethod": "COD",
+      "paymentStatus": "PENDING",
+      "paymentReference": null,
+      "createdAt": "2026-03-10T00:00:00.000Z",
+      "updatedAt": "2026-03-10T00:00:00.000Z",
+      "items": [
+        {
+          "id": "item-aisha-1",
+          "orderId": "order-aisha-rahman",
+          "productId": "prod-noor-flow-abaya",
+          "productName": "Noor Flow Abaya",
+          "quantity": 1,
+          "unitPrice": 349,
+          "size": "S"
+        },
+        {
+          "id": "item-aisha-2",
+          "orderId": "order-aisha-rahman",
+          "productId": "prod-safa-classic-pardha",
+          "productName": "Safa Classic Pardha",
+          "quantity": 1,
+          "unitPrice": 229,
+          "size": "Free Size"
+        }
+      ]
+    }
+  ]
+}
