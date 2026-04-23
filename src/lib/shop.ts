@@ -1,5 +1,6 @@
 export const shop = {
-  name: "Mehar Pardha",
+  name:"WC+ abya",
+  //  "Mehar Pardha",
   legalName: "Ladies Garments Trading & Tailoring L.L.C",
   email: "meharpardha@gmail.com",
   website: "www.meharpardha.com",
