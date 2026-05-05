@@ -5,17 +5,43 @@ import { NextResponse } from "next/server";
 
 const SESSION_COOKIE = "mehara_admin_session";
 const ONE_DAY_SECONDS = 60 * 60 * 24;
+const MIN_SECRET_LENGTH = 32;
+
+function getRequiredEnv(name: "SESSION_SECRET" | "ADMIN_EMAIL" | "ADMIN_PASSWORD") {
+  const value = process.env[name]?.trim();
+  if (!value) {
+    throw new Error(`${name} is required.`);
+  }
+
+  return value;
+}
 
 function getSessionSecret() {
-  return process.env.SESSION_SECRET ?? "change-mehara-session-secret";
+  const secret = getRequiredEnv("SESSION_SECRET");
+  if (secret.length < MIN_SECRET_LENGTH) {
+    throw new Error(`SESSION_SECRET must be at least ${MIN_SECRET_LENGTH} characters.`);
+  }
+
+  return secret;
 }
 
 function getAdminEmail() {
-  return process.env.ADMIN_EMAIL ?? "admin@mehara.local";
+  return getRequiredEnv("ADMIN_EMAIL").toLowerCase();
 }
 
 function getAdminPassword() {
-  return process.env.ADMIN_PASSWORD ?? "Admin123!";
+  return getRequiredEnv("ADMIN_PASSWORD");
+}
+
+function timingSafeStringEqual(left: string, right: string) {
+  const leftBuffer = Buffer.from(left);
+  const rightBuffer = Buffer.from(right);
+
+  if (leftBuffer.length !== rightBuffer.length) {
+    return false;
+  }
+
+  return timingSafeEqual(leftBuffer, rightBuffer);
 }
 
 function sign(value: string) {
@@ -88,10 +114,9 @@ export async function clearAdminSession() {
 }
 
 export function validateAdminCredentials(email: string, password: string) {
-  return email === getAdminEmail() && password === getAdminPassword();
+  return timingSafeStringEqual(email.trim().toLowerCase(), getAdminEmail()) && timingSafeStringEqual(password, getAdminPassword());
 }
 
 export const authConfig = {
   sessionCookie: SESSION_COOKIE,
-  defaultAdminEmail: getAdminEmail(),
 };

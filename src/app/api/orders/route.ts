@@ -1,7 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { requireAdminApi } from "@/lib/auth";
-import { createOrder, getOrders } from "@/lib/data";
+import { createOrder, getOrders, OrderCreationError } from "@/lib/data";
 import { validateOrderInput } from "@/lib/validation";
 
 export async function GET() {
@@ -21,9 +21,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: validation.error }, { status: 400 });
   }
 
-  const order = await createOrder(validation.data);
+  let order;
+  try {
+    order = await createOrder(validation.data);
+  } catch (error) {
+    if (error instanceof OrderCreationError) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
+
+    throw error;
+  }
 
   revalidatePath("/admin");
+  revalidatePath("/collection");
+  revalidatePath("/");
 
   return NextResponse.json(order, { status: 201 });
 }

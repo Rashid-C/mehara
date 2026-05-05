@@ -4,7 +4,7 @@ import { AddToCartButton } from "@/components/add-to-cart-button";
 import { ProductGallery } from "@/components/product-gallery";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { getProductBySlug, getProducts } from "@/lib/data";
+import { getProductBySlug } from "@/lib/data";
 import { formatCurrency } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
@@ -12,11 +12,6 @@ export const dynamic = "force-dynamic";
 type Props = {
   params: Promise<{ slug: string }>;
 };
-
-export async function generateStaticParams() {
-  const products = await getProducts();
-  return products.map((product) => ({ slug: product.slug }));
-}
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;

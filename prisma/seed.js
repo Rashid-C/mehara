@@ -5,7 +5,16 @@ const prisma = new PrismaClient();
 async function main() {
   await prisma.orderItem.deleteMany();
   await prisma.order.deleteMany();
+  await prisma.user.deleteMany();
+  await prisma.storeSettings.deleteMany();
   await prisma.product.deleteMany();
+
+  await prisma.storeSettings.create({
+    data: {
+      id: "default",
+      taxPercentage: 5,
+    },
+  });
 
   await prisma.product.createMany({
     data: [
@@ -89,11 +98,14 @@ async function main() {
   await prisma.order.create({
     data: {
       customerName: "Aisha Rahman",
+      customerEmail: "aisha@example.com",
       customerPhone: "+971 50 123 4567",
       shippingAddress: "Al Nahda, Dubai, UAE",
       notes: "Call before delivery",
       totalAmount: seededProducts.reduce((sum, product) => sum + product.price, 0),
       status: "CONFIRMED",
+      paymentMethod: "COD",
+      paymentStatus: "PENDING",
       items: {
         create: seededProducts.map((product) => ({
           productId: product.id,

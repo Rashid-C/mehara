@@ -4,6 +4,8 @@ import { AuthCard } from "@/components/auth-card";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
+export const dynamic = "force-dynamic";
+
 export default async function SignupPage() {
   const session = await getCustomerSession();
   if (session?.user) {

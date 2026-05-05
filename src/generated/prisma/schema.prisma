@@ -4,8 +4,38 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CUSTOMER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  COD
+  BANK_TRANSFER
+  PAYMENT_LINK
+  PAYPAL
+  STRIPE
+  RAZORPAY
+}
+
+enum PaymentStatus {
+  PENDING
+  AWAITING_PAYMENT
+  PAID
+  FAILED
+  REFUNDED
 }
 
 model Product {
@@ -22,19 +52,33 @@ model Product {
   featured         Boolean  @default(false)
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+
+  @@index([featured, createdAt])
+  @@index([category, name])
 }
 
 model Order {
-  id              String      @id @default(cuid())
-  customerName    String
-  customerPhone   String
-  shippingAddress String
-  notes           String?
-  totalAmount     Int
-  status          String      @default("PENDING")
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-  items           OrderItem[]
+  id               String        @id @default(cuid())
+  customerName     String
+  customerEmail    String?
+  customerPhone    String
+  shippingAddress  String
+  notes            String?
+  totalAmount      Int
+  status           OrderStatus   @default(PENDING)
+  paymentMethod    PaymentMethod @default(COD)
+  paymentStatus    PaymentStatus @default(PENDING)
+  paymentReference String?
+  userId           String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  items            OrderItem[]
+  user             User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([customerEmail, createdAt])
+  @@index([status, paymentStatus, createdAt])
+  @@index([userId, createdAt])
 }
 
 model OrderItem {
@@ -46,4 +90,29 @@ model OrderItem {
   unitPrice   Int
   size        String
   order       Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String?
+  image        String?
+  role         UserRole @default(CUSTOMER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  orders       Order[]
+
+  @@index([email])
+  @@index([role, createdAt])
+}
+
+model StoreSettings {
+  id            String   @id @default("default")
+  taxPercentage Float    @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

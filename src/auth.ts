@@ -5,6 +5,23 @@ import Google from "next-auth/providers/google";
 import { createUser, getUserByEmail, upsertOAuthUser } from "@/lib/data";
 import { verifyPassword } from "@/lib/password";
 
+function getAuthSecret() {
+  const secret = process.env.AUTH_SECRET?.trim();
+  if (!secret) {
+    throw new Error("AUTH_SECRET is required.");
+  }
+
+  if (secret.length < 32) {
+    throw new Error("AUTH_SECRET must be at least 32 characters.");
+  }
+
+  return secret;
+}
+
+export function assertCustomerAuthConfigured() {
+  getAuthSecret();
+}
+
 const providers = [
   Credentials({
     name: "Email",
@@ -44,48 +61,59 @@ const providers = [
     : []),
 ];
 
+const callbacks: NextAuthOptions["callbacks"] = {
+  async signIn({ user, account }) {
+    if (account?.provider === "google" && user.email) {
+      const dbUser = await upsertOAuthUser({
+        name: user.name ?? "Mehara Customer",
+        email: user.email,
+        image: user.image,
+      });
+
+      user.id = dbUser.id;
+    }
+
+    return true;
+  },
+  async jwt({ token, user }) {
+    if (user?.email) {
+      const record = await getUserByEmail(user.email);
+      if (record) {
+        token.userId = record.user.id;
+        token.role = record.user.role;
+      }
+    }
+
+    return token;
+  },
+  async session({ session, token }) {
+    if (session.user) {
+      session.user.id = String(token.userId ?? "");
+      session.user.role = String(token.role ?? "customer");
+    }
+
+    return session;
+  },
+};
+
+function createAuthOptions(): NextAuthOptions {
+  return {
+    session: { strategy: "jwt" },
+    secret: getAuthSecret(),
+    providers,
+    callbacks,
+  };
+}
+
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
   secret: process.env.AUTH_SECRET,
   providers,
-  callbacks: {
-    async signIn({ user, account }) {
-      if (account?.provider === "google" && user.email) {
-        const dbUser = await upsertOAuthUser({
-          name: user.name ?? "Mehara Customer",
-          email: user.email,
-          image: user.image,
-        });
-
-        user.id = dbUser.id;
-      }
-
-      return true;
-    },
-    async jwt({ token, user }) {
-      if (user?.email) {
-        const record = await getUserByEmail(user.email);
-        if (record) {
-          token.userId = record.user.id;
-          token.role = record.user.role;
-        }
-      }
-
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = String(token.userId ?? "");
-        session.user.role = String(token.role ?? "customer");
-      }
-
-      return session;
-    },
-  },
+  callbacks,
 };
 
 export function getCustomerSession() {
-  return getServerSession(authOptions);
+  return getServerSession(createAuthOptions());
 }
 
 export async function registerCustomer(input: { name: string; email: string; passwordHash: string }) {

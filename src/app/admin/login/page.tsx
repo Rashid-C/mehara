@@ -26,8 +26,8 @@ export default async function AdminLoginPage() {
             HTTP-only session cookie with credentials from the local environment file.
           </p>
           <div className="rounded-[1.5rem] border border-[var(--color-sand)] bg-white p-5 text-sm text-[var(--color-muted)]">
-            <p>Default local admin email: `admin@mehara.local`</p>
-            <p className="mt-2">Change `ADMIN_EMAIL`, `ADMIN_PASSWORD`, and `SESSION_SECRET` in `.env` before deployment.</p>
+            <p>Admin credentials are loaded from your environment variables.</p>
+            <p className="mt-2">Set `ADMIN_EMAIL`, `ADMIN_PASSWORD`, and a 32+ character `SESSION_SECRET` before deployment.</p>
           </div>
           <Link href="/" className="inline-flex text-sm font-semibold text-[var(--color-mocha)]">
             Back to storefront

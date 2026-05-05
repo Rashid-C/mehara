@@ -1,6 +1,16 @@
 import NextAuth from "next-auth";
-import { authOptions } from "@/auth";
+import { assertCustomerAuthConfigured, authOptions } from "@/auth";
 
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST };
+async function GET(request: Request) {
+  assertCustomerAuthConfigured();
+  return handler(request);
+}
+
+async function POST(request: Request) {
+  assertCustomerAuthConfigured();
+  return handler(request);
+}
+
+export { GET, POST };

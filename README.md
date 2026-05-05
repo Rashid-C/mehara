@@ -23,12 +23,12 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 Minimum local variables:
 
 ```env
-DATABASE_URL="file:./data/mehara.db"
+DATABASE_URL="postgresql://USER:PASSWORD@HOST.neon.tech/DBNAME?sslmode=require"
 NEXTAUTH_URL="http://localhost:3000"
 ADMIN_EMAIL="admin@mehara.local"
-ADMIN_PASSWORD="Admin123!"
-SESSION_SECRET="replace-this-with-a-long-random-secret"
-AUTH_SECRET="replace-this-with-a-long-random-secret"
+ADMIN_PASSWORD="replace-this-with-a-strong-admin-password"
+SESSION_SECRET="replace-this-with-a-long-random-secret-32-plus-chars"
+AUTH_SECRET="replace-this-with-a-long-random-secret-32-plus-chars"
 LOCAL_UPLOADS_ENABLED="true"
 NEXT_PUBLIC_LOCAL_UPLOADS_ENABLED="true"
 NEXT_PUBLIC_UPLOADTHING_ENABLED="false"
@@ -55,7 +55,7 @@ GitHub to Vercel setup:
 Recommended Vercel environment variables:
 
 ```env
-DATABASE_URL="file:/tmp/mehara.db"
+DATABASE_URL="postgresql://USER:PASSWORD@HOST.neon.tech/DBNAME?sslmode=require"
 NEXTAUTH_URL="https://your-domain.vercel.app"
 ADMIN_EMAIL="your-admin-email"
 ADMIN_PASSWORD="your-strong-admin-password"
@@ -71,11 +71,26 @@ GOOGLE_CLIENT_SECRET=""
 
 Important hosting notes:
 
-- Product, order, and user data are currently stored with `better-sqlite3` in `src/lib/db.ts`.
-- On Vercel, this app falls back to `/tmp/mehara-data/mehara.db`, which is temporary storage only.
-- That means products, orders, admin changes, and registered users can be lost after a cold start or redeploy.
+- Prisma is configured for Postgres in `prisma/schema.prisma`; Neon is the intended production database.
+- Product, order, customer, and store settings data now use Prisma with Postgres.
+- `SESSION_SECRET` and `AUTH_SECRET` must be unique random values with at least 32 characters.
 - Local image uploads are disabled on Vercel. Use UploadThing there.
-- If you want production-safe hosting, move runtime data off local SQLite to a managed database such as Postgres, Neon, Supabase, Railway, or Turso, then refactor `src/lib/data.ts` / `src/lib/db.ts` or switch fully to Prisma.
+- After setting `DATABASE_URL`, run `npm run db:generate`, then `npm run db:migrate` locally or `npm run db:deploy` in deployment.
+
+## Neon + Prisma Setup
+
+1. Create a Neon project and database.
+2. Copy the pooled or direct Neon connection string.
+3. Set `DATABASE_URL` with `sslmode=require`.
+4. Run:
+
+```bash
+npm run db:generate
+npm run db:migrate
+npm run db:seed
+```
+
+Use `npm run db:deploy` instead of `npm run db:migrate` in production deployments.
 
 ## Learn More
 
