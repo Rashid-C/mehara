@@ -63,36 +63,51 @@ const providers = [
 
 const callbacks: NextAuthOptions["callbacks"] = {
   async signIn({ user, account }) {
-    if (account?.provider === "google" && user.email) {
-      const dbUser = await upsertOAuthUser({
-        name: user.name ?? "Mehara Customer",
-        email: user.email,
-        image: user.image,
-      });
+    try {
+      if (account?.provider === "google" && user.email) {
+        const dbUser = await upsertOAuthUser({
+          name: user.name ?? "Mehara Customer",
+          email: user.email,
+          image: user.image,
+        });
 
-      user.id = dbUser.id;
+        user.id = dbUser.id;
+      }
+
+      return true;
+    } catch (error) {
+      console.error("[NextAuth] signIn callback error:", error);
+      return false;
     }
-
-    return true;
   },
   async jwt({ token, user }) {
-    if (user?.email) {
-      const record = await getUserByEmail(user.email);
-      if (record) {
-        token.userId = record.user.id;
-        token.role = record.user.role;
+    try {
+      if (user?.email) {
+        const record = await getUserByEmail(user.email);
+        if (record) {
+          token.userId = record.user.id;
+          token.role = record.user.role;
+        }
       }
-    }
 
-    return token;
+      return token;
+    } catch (error) {
+      console.error("[NextAuth] jwt callback error:", error);
+      return token;
+    }
   },
   async session({ session, token }) {
-    if (session.user) {
-      session.user.id = String(token.userId ?? "");
-      session.user.role = String(token.role ?? "customer");
-    }
+    try {
+      if (session.user) {
+        session.user.id = String(token.userId ?? "");
+        session.user.role = String(token.role ?? "customer");
+      }
 
-    return session;
+      return session;
+    } catch (error) {
+      console.error("[NextAuth] session callback error:", error);
+      return session;
+    }
   },
 };
 
@@ -105,15 +120,10 @@ function createAuthOptions(): NextAuthOptions {
   };
 }
 
-export const authOptions: NextAuthOptions = {
-  session: { strategy: "jwt" },
-  secret: process.env.AUTH_SECRET,
-  providers,
-  callbacks,
-};
+export const authOptions: NextAuthOptions = createAuthOptions();
 
 export function getCustomerSession() {
-  return getServerSession(createAuthOptions());
+  return getServerSession(authOptions);
 }
 
 export async function registerCustomer(input: { name: string; email: string; passwordHash: string }) {
